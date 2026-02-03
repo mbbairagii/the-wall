@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
+import LoadingScreen from './components/LoadingScreen';
 import Entry from './components/Entry';
 import MovieGrid from './components/MovieGrid';
 import { Movie } from './types/movie';
 import { getMovies } from './lib/movieService';
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [showEntry, setShowEntry] = useState(true);
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [dataLoading, setDataLoading] = useState(true);
 
   useEffect(() => {
     loadMovies();
@@ -20,15 +22,23 @@ export default function App() {
     } catch (error) {
       console.error('Failed to load movies:', error);
     } finally {
-      setLoading(false);
+      setDataLoading(false);
     }
+  };
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
   };
 
   const handleEnter = () => {
     setShowEntry(false);
   };
 
-  if (loading) {
+  if (isLoading) {
+    return <LoadingScreen onComplete={handleLoadingComplete} />;
+  }
+
+  if (dataLoading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-white font-body tracking-widest animate-pulse">
