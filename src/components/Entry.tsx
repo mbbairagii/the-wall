@@ -321,7 +321,7 @@ export default function Entry({ onEnter }: EntryProps) {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1, duration: 1 }}
                     >
-                        A curated collection of cinematic masterpieces that shaped a soul
+                        A curated collection of cinematic masterpieces that shaped my soul
                     </motion.p>
 
                     <EnterButton onClick={handleEnter} />
@@ -334,6 +334,17 @@ export default function Entry({ onEnter }: EntryProps) {
                     />
                 </motion.div>
             </div>
+
+            <motion.footer
+                className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-black/90 via-black/70 to-transparent backdrop-blur-sm py-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 2.5 }}
+            >
+                <p className="text-center text-white/60 text-sm font-body tracking-[0.35em] uppercase">
+                    Designed and Developed by Kira
+                </p>
+            </motion.footer>
         </motion.div>
     );
 }

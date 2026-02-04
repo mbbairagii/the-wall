@@ -6,7 +6,7 @@ export default function BackgroundLayer() {
             <motion.div
                 className="fixed inset-0 bg-cover bg-center"
                 style={{
-                    backgroundImage: 'url(/6x.jpeg)',
+                    backgroundImage: 'url(/13x.jpeg)',
                     filter: 'brightness(0.4) contrast(1.1)',
                 }}
                 animate={{
