@@ -126,6 +126,17 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                 INITIALIZING EXPERIENCE
             </motion.div>
 
+            <motion.footer
+                className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-black/90 via-black/70 to-transparent py-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 }}
+            >
+                <p className="text-center text-white/60 text-sm font-body tracking-[0.35em] uppercase">
+                    Designed and Developed by Kira
+                </p>
+            </motion.footer>
+
             <div className="fixed inset-0 pointer-events-none">
                 {[...Array(50)].map((_, i) => (
                     <motion.div
