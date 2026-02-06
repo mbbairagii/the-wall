@@ -27,6 +27,14 @@ export default function Entry({ onEnter }: EntryProps) {
                 clipPath: 'circle(0% at 50% 50%)',
             }}
             transition={{ duration: isExiting ? 1.5 : 1, ease: 'easeInOut' }}
+            style={{
+                background: `
+                    radial-gradient(ellipse at 50% 30%, rgba(220, 80, 80, 0.5) 0%, transparent 50%),
+                    radial-gradient(ellipse at 30% 60%, rgba(160, 50, 50, 0.4) 0%, transparent 40%),
+                    radial-gradient(ellipse at 70% 70%, rgba(140, 40, 40, 0.4) 0%, transparent 40%),
+                    linear-gradient(180deg, #1a0808 0%, #2d1414 20%, #4a2020 40%, #6a2e2e 50%, #4a2020 60%, #2d1414 80%, #1a0808 100%)
+                `
+            }}
         >
             <BackgroundLayer />
             <FloatingParticles />
@@ -34,17 +42,40 @@ export default function Entry({ onEnter }: EntryProps) {
             <div
                 className="fixed inset-0 pointer-events-none"
                 style={{
-                    background: 'radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.7) 100%)',
+                    background: 'radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.4) 100%)',
                 }}
             />
 
             <motion.div
-                className="fixed inset-0 pointer-events-none opacity-20"
+                className="fixed inset-0 pointer-events-none"
+                style={{
+                    background: 'radial-gradient(circle at center, transparent 50%, rgba(0, 0, 0, 0.5) 100%)',
+                }}
+            />
+
+            <motion.div
+                className="fixed inset-0 pointer-events-none opacity-[0.04] mix-blend-overlay"
+                style={{
+                    backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' /%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\' /%3E%3C/svg%3E")',
+                }}
+            />
+
+            <motion.div
+                className="fixed inset-0 pointer-events-none opacity-[0.02]"
+                style={{
+                    backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px)',
+                }}
+                animate={{ y: [0, 50] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+            />
+
+            <motion.div
+                className="fixed inset-0 pointer-events-none opacity-30"
                 animate={{
                     background: [
-                        'radial-gradient(ellipse at 30% 30%, rgba(220, 38, 38, 0.1) 0%, transparent 50%)',
-                        'radial-gradient(ellipse at 70% 70%, rgba(220, 38, 38, 0.1) 0%, transparent 50%)',
-                        'radial-gradient(ellipse at 30% 30%, rgba(220, 38, 38, 0.1) 0%, transparent 50%)',
+                        'radial-gradient(ellipse at 30% 30%, rgba(220, 38, 38, 0.2) 0%, transparent 50%)',
+                        'radial-gradient(ellipse at 70% 70%, rgba(220, 38, 38, 0.2) 0%, transparent 50%)',
+                        'radial-gradient(ellipse at 30% 30%, rgba(220, 38, 38, 0.2) 0%, transparent 50%)',
                     ],
                 }}
                 transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
@@ -54,28 +85,74 @@ export default function Entry({ onEnter }: EntryProps) {
                 className="fixed inset-0 pointer-events-none"
                 style={{
                     backgroundImage: `
-            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)
+            linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px),
+            linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)
           `,
                     backgroundSize: '50px 50px',
                 }}
                 animate={{
-                    opacity: [0.05, 0.1, 0.05],
+                    opacity: [0.08, 0.15, 0.08],
                 }}
                 transition={{ duration: 5, repeat: Infinity }}
             />
 
-            <div className="fixed top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />
-            <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
-            <div className="fixed top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-black/50 to-transparent pointer-events-none" />
-            <div className="fixed top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-black/50 to-transparent pointer-events-none" />
+            <div className="fixed top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/30 to-transparent pointer-events-none" />
+            <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+            <div className="fixed top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-black/30 to-transparent pointer-events-none" />
+            <div className="fixed top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-black/30 to-transparent pointer-events-none" />
+
+            <div className="fixed top-0 left-0 w-16 h-16 pointer-events-none opacity-35">
+                <svg viewBox="0 0 100 100" className="w-full h-full">
+                    <line x1="0" y1="0" x2="30" y2="0" stroke="rgba(220, 38, 38, 0.8)" strokeWidth="1" />
+                    <line x1="0" y1="0" x2="0" y2="30" stroke="rgba(220, 38, 38, 0.8)" strokeWidth="1" />
+                </svg>
+            </div>
+            <div className="fixed top-0 right-0 w-16 h-16 pointer-events-none opacity-35 rotate-90">
+                <svg viewBox="0 0 100 100" className="w-full h-full">
+                    <line x1="0" y1="0" x2="30" y2="0" stroke="rgba(220, 38, 38, 0.8)" strokeWidth="1" />
+                    <line x1="0" y1="0" x2="0" y2="30" stroke="rgba(220, 38, 38, 0.8)" strokeWidth="1" />
+                </svg>
+            </div>
+            <div className="fixed bottom-0 left-0 w-16 h-16 pointer-events-none opacity-35 -rotate-90">
+                <svg viewBox="0 0 100 100" className="w-full h-full">
+                    <line x1="0" y1="0" x2="30" y2="0" stroke="rgba(220, 38, 38, 0.8)" strokeWidth="1" />
+                    <line x1="0" y1="0" x2="0" y2="30" stroke="rgba(220, 38, 38, 0.8)" strokeWidth="1" />
+                </svg>
+            </div>
+            <div className="fixed bottom-0 right-0 w-16 h-16 pointer-events-none opacity-35 rotate-180">
+                <svg viewBox="0 0 100 100" className="w-full h-full">
+                    <line x1="0" y1="0" x2="30" y2="0" stroke="rgba(220, 38, 38, 0.8)" strokeWidth="1" />
+                    <line x1="0" y1="0" x2="0" y2="30" stroke="rgba(220, 38, 38, 0.8)" strokeWidth="1" />
+                </svg>
+            </div>
+
+            {[...Array(6)].map((_, i) => (
+                <motion.div
+                    key={i}
+                    className="fixed w-1 h-1 bg-white/35 rounded-full pointer-events-none"
+                    style={{
+                        left: `${20 + i * 15}%`,
+                        top: `${30 + (i % 3) * 20}%`,
+                    }}
+                    animate={{
+                        y: [0, 200],
+                        opacity: [0, 0.5, 0],
+                    }}
+                    transition={{
+                        duration: 8 + i * 2,
+                        repeat: Infinity,
+                        delay: i * 1.5,
+                        ease: 'linear',
+                    }}
+                />
+            ))}
 
             <motion.div className="fixed left-8 top-8">
-                <svg width="80" height="80" viewBox="0 0 80 80" className="opacity-30">
+                <svg width="80" height="80" viewBox="0 0 80 80" className="opacity-45">
                     <motion.path
                         d="M 10 10 L 70 10 L 70 70 L 10 70 Z M 20 20 L 20 60 L 60 60 L 60 20 Z"
                         fill="none"
-                        stroke="rgba(220, 38, 38, 0.6)"
+                        stroke="rgba(220, 38, 38, 0.8)"
                         strokeWidth="1"
                         initial={{ pathLength: 0 }}
                         animate={{ pathLength: 1 }}
@@ -86,7 +163,7 @@ export default function Entry({ onEnter }: EntryProps) {
                         cy="40"
                         r="15"
                         fill="none"
-                        stroke="rgba(220, 38, 38, 0.4)"
+                        stroke="rgba(220, 38, 38, 0.6)"
                         strokeWidth="1"
                         initial={{ pathLength: 0, rotate: 0 }}
                         animate={{ pathLength: 1, rotate: 360 }}
@@ -99,11 +176,11 @@ export default function Entry({ onEnter }: EntryProps) {
             </motion.div>
 
             <motion.div className="fixed right-8 bottom-8">
-                <svg width="80" height="80" viewBox="0 0 80 80" className="opacity-30">
+                <svg width="80" height="80" viewBox="0 0 80 80" className="opacity-45">
                     <motion.path
                         d="M 10 10 L 70 10 L 70 70 L 10 70 Z M 20 20 L 20 60 L 60 60 L 60 20 Z"
                         fill="none"
-                        stroke="rgba(220, 38, 38, 0.6)"
+                        stroke="rgba(220, 38, 38, 0.8)"
                         strokeWidth="1"
                         initial={{ pathLength: 0 }}
                         animate={{ pathLength: 1 }}
@@ -114,7 +191,7 @@ export default function Entry({ onEnter }: EntryProps) {
                         cy="40"
                         r="15"
                         fill="none"
-                        stroke="rgba(220, 38, 38, 0.4)"
+                        stroke="rgba(220, 38, 38, 0.6)"
                         strokeWidth="1"
                         initial={{ pathLength: 0, rotate: 0 }}
                         animate={{ pathLength: 1, rotate: -360 }}
@@ -130,10 +207,10 @@ export default function Entry({ onEnter }: EntryProps) {
                 {[...Array(5)].map((_, i) => (
                     <motion.div
                         key={i}
-                        className="w-12 h-12 border border-white/10 rotate-45"
+                        className="w-12 h-12 border border-white/20 rotate-45"
                         initial={{ opacity: 0, x: -50 }}
                         animate={{
-                            opacity: [0.1, 0.3, 0.1],
+                            opacity: [0.2, 0.4, 0.2],
                             x: 0,
                             rotate: [45, 135, 45]
                         }}
@@ -150,10 +227,10 @@ export default function Entry({ onEnter }: EntryProps) {
                 {[...Array(5)].map((_, i) => (
                     <motion.div
                         key={i}
-                        className="w-12 h-12 border border-white/10 rotate-45"
+                        className="w-12 h-12 border border-white/20 rotate-45"
                         initial={{ opacity: 0, x: 50 }}
                         animate={{
-                            opacity: [0.1, 0.3, 0.1],
+                            opacity: [0.2, 0.4, 0.2],
                             x: 0,
                             rotate: [45, -45, 45]
                         }}
@@ -176,7 +253,7 @@ export default function Entry({ onEnter }: EntryProps) {
                     {[...Array(8)].map((_, i) => (
                         <motion.div
                             key={i}
-                            className="h-[1px] bg-white/20"
+                            className="h-[1px] bg-white/30"
                             initial={{ width: 0 }}
                             animate={{ width: [0, 40, 0] }}
                             transition={{
@@ -199,7 +276,7 @@ export default function Entry({ onEnter }: EntryProps) {
                     {[...Array(8)].map((_, i) => (
                         <motion.div
                             key={i}
-                            className="h-[1px] bg-white/20"
+                            className="h-[1px] bg-white/30"
                             initial={{ width: 0 }}
                             animate={{ width: [0, 40, 0] }}
                             transition={{
@@ -211,6 +288,147 @@ export default function Entry({ onEnter }: EntryProps) {
                     ))}
                 </motion.div>
             </div>
+
+            <motion.div
+                className="fixed top-1/4 left-1/4 w-64 h-64 rounded-full pointer-events-none"
+                style={{
+                    background: 'radial-gradient(circle, rgba(220, 38, 38, 0.3) 0%, transparent 70%)',
+                    filter: 'blur(60px)',
+                }}
+                animate={{
+                    scale: [1, 1.3, 1],
+                    x: [0, 50, 0],
+                    y: [0, -30, 0],
+                }}
+                transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+            />
+
+            <motion.div
+                className="fixed bottom-1/4 right-1/4 w-64 h-64 rounded-full pointer-events-none"
+                style={{
+                    background: 'radial-gradient(circle, rgba(220, 38, 38, 0.3) 0%, transparent 70%)',
+                    filter: 'blur(60px)',
+                }}
+                animate={{
+                    scale: [1, 1.2, 1],
+                    x: [0, -40, 0],
+                    y: [0, 40, 0],
+                }}
+                transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+            />
+
+            <div className="fixed top-32 left-1/2 -translate-x-1/2">
+                <motion.div className="flex gap-3">
+                    {[...Array(5)].map((_, i) => (
+                        <motion.div
+                            key={i}
+                            className="w-1 bg-blood-500/60"
+                            initial={{ height: 0 }}
+                            animate={{ height: [0, 20, 40, 20, 0] }}
+                            transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                delay: i * 0.15,
+                                ease: 'easeInOut',
+                            }}
+                        />
+                    ))}
+                </motion.div>
+            </div>
+
+            <div className="fixed top-1/3 right-24">
+                <motion.div
+                    className="w-20 h-20 border-2 border-white/20 rounded-full"
+                    animate={{
+                        scale: [1, 1.5, 1],
+                        opacity: [0.4, 0, 0.4],
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, ease: 'easeOut' }}
+                />
+                <motion.div
+                    className="absolute top-0 left-0 w-20 h-20 border-2 border-blood-500/40 rounded-full"
+                    animate={{
+                        scale: [1, 1.5, 1],
+                        opacity: [0.7, 0, 0.7],
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, ease: 'easeOut', delay: 1 }}
+                />
+            </div>
+
+            <div className="fixed bottom-1/3 left-24">
+                <motion.div
+                    className="w-20 h-20 border-2 border-white/20 rounded-full"
+                    animate={{
+                        scale: [1, 1.5, 1],
+                        opacity: [0.4, 0, 0.4],
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, ease: 'easeOut', delay: 0.5 }}
+                />
+                <motion.div
+                    className="absolute top-0 left-0 w-20 h-20 border-2 border-blood-500/40 rounded-full"
+                    animate={{
+                        scale: [1, 1.5, 1],
+                        opacity: [0.7, 0, 0.7],
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, ease: 'easeOut', delay: 1.5 }}
+                />
+            </div>
+
+            <div className="fixed top-20 left-1/3">
+                {[...Array(3)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        className="absolute w-1 h-1 bg-blood-500 rounded-full"
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{
+                            opacity: [0, 1, 0],
+                            scale: [0, 1, 0],
+                            y: [0, -100],
+                            x: [(i - 1) * 20, (i - 1) * 40],
+                        }}
+                        transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            delay: i * 0.5,
+                            ease: 'easeOut',
+                        }}
+                    />
+                ))}
+            </div>
+
+            <div className="fixed bottom-20 right-1/3">
+                {[...Array(3)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        className="absolute w-1 h-1 bg-blood-500 rounded-full"
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{
+                            opacity: [0, 1, 0],
+                            scale: [0, 1, 0],
+                            y: [0, 100],
+                            x: [(i - 1) * 20, (i - 1) * 40],
+                        }}
+                        transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            delay: i * 0.5 + 1,
+                            ease: 'easeOut',
+                        }}
+                    />
+                ))}
+            </div>
+
+            <motion.div
+                className="fixed inset-0 pointer-events-none"
+                animate={{
+                    background: [
+                        'linear-gradient(0deg, transparent 0%, rgba(220, 38, 38, 0.04) 50%, transparent 100%)',
+                        'linear-gradient(180deg, transparent 0%, rgba(220, 38, 38, 0.04) 50%, transparent 100%)',
+                        'linear-gradient(0deg, transparent 0%, rgba(220, 38, 38, 0.04) 50%, transparent 100%)',
+                    ],
+                }}
+                transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+            />
 
             <div className="relative z-10 text-center px-8">
                 <motion.div
@@ -225,7 +443,7 @@ export default function Entry({ onEnter }: EntryProps) {
                         transition={{ delay: 0.5, duration: 1 }}
                     >
                         <motion.div
-                            className="h-[1px] w-24 bg-gradient-to-r from-transparent to-white/50"
+                            className="h-[1px] w-24 bg-gradient-to-r from-transparent to-white/70"
                             initial={{ scaleX: 0 }}
                             animate={{ scaleX: 1 }}
                             transition={{ delay: 0.8, duration: 1 }}
@@ -246,7 +464,7 @@ export default function Entry({ onEnter }: EntryProps) {
                         </motion.div>
 
                         <motion.div
-                            className="h-[1px] w-24 bg-gradient-to-l from-transparent to-white/50"
+                            className="h-[1px] w-24 bg-gradient-to-l from-transparent to-white/70"
                             initial={{ scaleX: 0 }}
                             animate={{ scaleX: 1 }}
                             transition={{ delay: 0.8, duration: 1 }}
@@ -259,7 +477,7 @@ export default function Entry({ onEnter }: EntryProps) {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1.5, ease: 'easeOut' }}
                         style={{
-                            textShadow: '0 0 30px rgba(220, 38, 38, 0.4), 0 4px 8px rgba(0, 0, 0, 0.8)',
+                            textShadow: '0 0 35px rgba(220, 38, 38, 0.6), 0 4px 10px rgba(0, 0, 0, 0.7)',
                         }}
                     >
                         <motion.div
@@ -271,9 +489,9 @@ export default function Entry({ onEnter }: EntryProps) {
                             <motion.span
                                 animate={{
                                     textShadow: [
-                                        '0 0 30px rgba(220, 38, 38, 0.4)',
-                                        '0 0 50px rgba(220, 38, 38, 0.6)',
-                                        '0 0 30px rgba(220, 38, 38, 0.4)',
+                                        '0 0 35px rgba(220, 38, 38, 0.6)',
+                                        '0 0 55px rgba(220, 38, 38, 0.8)',
+                                        '0 0 35px rgba(220, 38, 38, 0.6)',
                                     ],
                                 }}
                                 transition={{ duration: 3, repeat: Infinity }}
@@ -290,9 +508,9 @@ export default function Entry({ onEnter }: EntryProps) {
                             <motion.span
                                 animate={{
                                     textShadow: [
-                                        '0 0 30px rgba(220, 38, 38, 0.4)',
-                                        '0 0 50px rgba(220, 38, 38, 0.6)',
-                                        '0 0 30px rgba(220, 38, 38, 0.4)',
+                                        '0 0 35px rgba(220, 38, 38, 0.6)',
+                                        '0 0 55px rgba(220, 38, 38, 0.8)',
+                                        '0 0 35px rgba(220, 38, 38, 0.6)',
                                     ],
                                 }}
                                 transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
@@ -316,7 +534,7 @@ export default function Entry({ onEnter }: EntryProps) {
                     </motion.h1>
 
                     <motion.p
-                        className="font-body text-base md:text-lg tracking-[0.2em] text-gray-300 mb-12 italic max-w-2xl mx-auto"
+                        className="font-body text-base md:text-lg tracking-[0.2em] text-gray-100 mb-12 italic max-w-2xl mx-auto"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1, duration: 1 }}
@@ -327,7 +545,7 @@ export default function Entry({ onEnter }: EntryProps) {
                     <EnterButton onClick={handleEnter} />
 
                     <motion.div
-                        className="mt-16 w-[1px] h-24 mx-auto bg-gradient-to-b from-white/30 to-transparent"
+                        className="mt-16 w-[1px] h-24 mx-auto bg-gradient-to-b from-white/40 to-transparent"
                         initial={{ height: 0 }}
                         animate={{ height: 96 }}
                         transition={{ delay: 2, duration: 1 }}
@@ -336,12 +554,12 @@ export default function Entry({ onEnter }: EntryProps) {
             </div>
 
             <motion.footer
-                className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-black/90 via-black/70 to-transparent backdrop-blur-sm py-4"
+                className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-black/70 via-black/50 to-transparent backdrop-blur-sm py-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 2.5 }}
             >
-                <p className="text-center text-white/60 text-sm font-body tracking-[0.35em] uppercase">
+                <p className="text-center text-white/80 text-sm font-body tracking-[0.35em] uppercase">
                     Designed and Developed by Kira
                 </p>
             </motion.footer>
