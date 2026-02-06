@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { movies } from '../lib/movieData'
 
@@ -6,6 +6,8 @@ export default function MovieWall() {
     const [hoveredMovie, setHoveredMovie] = useState<string | null>(null)
     const [hoveredPainting, setHoveredPainting] = useState<string | null>(null)
     const [selectedMovie, setSelectedMovie] = useState<string | null>(null)
+    const [paintingSecret, setPaintingSecret] = useState<string | null>(null)
+    const [hoveredPerson, setHoveredPerson] = useState(false)
 
     const rows = 6
     const cols = 10
@@ -21,21 +23,55 @@ export default function MovieWall() {
             title: "The Gare Saint-Lazare",
             artist: "Claude Monet",
             year: 1877,
-            description: "An impressionist masterpiece capturing the modernity of Parisian railway stations through light and steam."
+            description: "An impressionist masterpiece capturing the modernity of Parisian railway stations through light and steam.",
+            secret: "Time moves like a train through a station—some moments arrive, others depart, but the tracks of memory remain forever.",
+            icon: "🚂"
         },
         leftBottom: {
             title: "Nocturne by the River",
             artist: "Romantic Era — Unknown",
             year: "19th Century",
-            description: "A moody nocturnal riverside scene illuminated by gas lamps, evoking solitude, mist, and quiet reflection."
+            description: "A moody nocturnal riverside scene illuminated by gas lamps, evoking solitude, mist, and quiet reflection.",
+            secret: "In the darkest frames, we find our truest selves. Cinema, like night, reveals what daylight conceals.",
+            icon: "🌙"
         },
         right: {
             title: "Starry Night Over the Rhône",
             artist: "Vincent van Gogh",
             year: 1888,
-            description: "A nocturnal landscape depicting the night sky reflected in the Rhône river, with glowing gas lights along the shore."
+            description: "A nocturnal landscape depicting the night sky reflected in the Rhône river, with glowing gas lights along the shore.",
+            secret: "Every star tells a story, every film is a constellation. We are all searching for light in infinite darkness.",
+            icon: "⭐"
         }
     }
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape' && selectedMovie) {
+                setSelectedMovie(null);
+            }
+
+            if (selectedMovie) {
+                const currentIndex = movies.findIndex(m => m.id === selectedMovie);
+
+                if (e.key === 'ArrowRight' && currentIndex < movies.length - 1) {
+                    setSelectedMovie(movies[currentIndex + 1].id);
+                }
+
+                if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                    setSelectedMovie(movies[currentIndex - 1].id);
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [selectedMovie]);
+
+    const handlePaintingDoubleClick = (painting: 'left' | 'leftBottom' | 'right') => {
+        setPaintingSecret(painting);
+        setTimeout(() => setPaintingSecret(null), 5000);
+    };
 
     return (
         <div
@@ -81,6 +117,7 @@ export default function MovieWall() {
                 style={{ pointerEvents: 'auto' }}
                 onMouseEnter={() => setHoveredPainting('left')}
                 onMouseLeave={() => setHoveredPainting(null)}
+                onDoubleClick={() => handlePaintingDoubleClick('left')}
                 animate={{
                     y: hoveredPainting === 'left' ? -5 : 0,
                 }}
@@ -107,6 +144,7 @@ export default function MovieWall() {
                 style={{ pointerEvents: 'auto' }}
                 onMouseEnter={() => setHoveredPainting('leftBottom')}
                 onMouseLeave={() => setHoveredPainting(null)}
+                onDoubleClick={() => handlePaintingDoubleClick('leftBottom')}
                 animate={{
                     y: hoveredPainting === 'leftBottom' ? -5 : 0,
                 }}
@@ -158,6 +196,7 @@ export default function MovieWall() {
                 style={{ pointerEvents: 'auto' }}
                 onMouseEnter={() => setHoveredPainting('right')}
                 onMouseLeave={() => setHoveredPainting(null)}
+                onDoubleClick={() => handlePaintingDoubleClick('right')}
                 animate={{
                     y: hoveredPainting === 'right' ? -5 : 0,
                 }}
@@ -179,16 +218,211 @@ export default function MovieWall() {
                 />
             </motion.div>
 
-            <div
-                className="fixed bottom-9 left-12 z-30 pointer-events-none"
+            <AnimatePresence>
+                {paintingSecret && (
+                    <motion.div
+                        className="fixed inset-0 z-[70] flex items-center justify-center px-4"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <motion.div
+                            className="absolute inset-0 bg-black/70 backdrop-blur-md"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                        />
+
+                        <motion.div
+                            className="relative max-w-2xl"
+                            initial={{ scale: 0.3, rotateY: -180, opacity: 0 }}
+                            animate={{ scale: 1, rotateY: 0, opacity: 1 }}
+                            exit={{ scale: 0.3, rotateY: 180, opacity: 0 }}
+                            transition={{ duration: 0.5, type: 'spring', bounce: 0.3 }}
+                        >
+                            <motion.div
+                                className="absolute -inset-3 bg-gradient-to-r from-amber-500/30 via-blood-500/30 to-amber-500/30 rounded-3xl blur-xl"
+                                animate={{
+                                    opacity: [0.5, 0.8, 0.5],
+                                    scale: [1, 1.02, 1],
+                                }}
+                                transition={{ duration: 3, repeat: Infinity }}
+                            />
+
+                            <div className="relative bg-gradient-to-br from-amber-950 via-zinc-900 to-black backdrop-blur-xl px-10 py-8 rounded-3xl border-2 border-amber-500/40 shadow-2xl">
+                                <motion.div
+                                    className="absolute -top-8 left-1/2 -translate-x-1/2 text-6xl"
+                                    animate={{
+                                        rotate: [0, -15, 15, -15, 0],
+                                        y: [0, -5, 0]
+                                    }}
+                                    transition={{ duration: 2, repeat: Infinity }}
+                                >
+                                    {paintings[paintingSecret as keyof typeof paintings].icon}
+                                </motion.div>
+
+                                <div className="text-center mb-4 mt-6">
+                                    <motion.div
+                                        className="inline-block"
+                                        initial={{ scaleX: 0 }}
+                                        animate={{ scaleX: 1 }}
+                                        transition={{ delay: 0.2, duration: 0.5 }}
+                                    >
+                                        <h4 className="text-2xl font-display text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-300 tracking-[0.2em] mb-2">
+                                            HIDDEN TRUTH
+                                        </h4>
+                                        <div className="h-[1px] bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
+                                    </motion.div>
+                                </div>
+
+                                <motion.p
+                                    className="text-white/90 text-lg text-center leading-relaxed font-serif italic mb-4"
+                                    initial={{ y: 20, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ delay: 0.3 }}
+                                >
+                                    "{paintings[paintingSecret as keyof typeof paintings].secret}"
+                                </motion.p>
+
+                                <motion.div
+                                    className="flex items-center justify-center gap-2 text-amber-400/60 text-xs tracking-[0.2em]"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.5 }}
+                                >
+                                    <div className="h-[1px] w-8 bg-amber-500/30" />
+                                    <span>REVEALED TO THE CURIOUS</span>
+                                    <div className="h-[1px] w-8 bg-amber-500/30" />
+                                </motion.div>
+
+                                {[...Array(6)].map((_, i) => (
+                                    <motion.div
+                                        key={i}
+                                        className="absolute w-1 h-1 bg-amber-400 rounded-full"
+                                        style={{
+                                            top: `${15 + i * 15}%`,
+                                            left: i % 2 === 0 ? '10px' : 'auto',
+                                            right: i % 2 === 1 ? '10px' : 'auto',
+                                        }}
+                                        animate={{
+                                            opacity: [0.2, 1, 0.2],
+                                            scale: [0.5, 1.5, 0.5],
+                                        }}
+                                        transition={{
+                                            duration: 2,
+                                            repeat: Infinity,
+                                            delay: i * 0.2,
+                                        }}
+                                    />
+                                ))}
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* PERSON SITTING - WITH "THAT'S ME" TOOLTIP */}
+            <motion.div
+                className="fixed bottom-9 left-12 z-30 cursor-pointer"
+                style={{ pointerEvents: 'auto' }}
+                onMouseEnter={() => setHoveredPerson(true)}
+                onMouseLeave={() => setHoveredPerson(false)}
+                animate={{
+                    y: hoveredPerson ? -8 : 0,
+                }}
+                transition={{ duration: 0.3 }}
             >
                 <img
-                    src="/20x.png"
-                    className="h-[600px] w-auto object-contain drop-shadow-2xl"
-                    style={{ filter: 'brightness(0.85) contrast(1.1)' }}
+                    src="/21x.png"
+                    className="h-[400px] w-auto object-contain drop-shadow-2xl"
+                    style={{
+                        filter: hoveredPerson ? 'brightness(1) contrast(1.2)' : 'brightness(0.85) contrast(1.1)',
+                        pointerEvents: 'none'
+                    }}
                     draggable={false}
                 />
-            </div>
+
+                <AnimatePresence>
+                    {hoveredPerson && (
+                        <motion.div
+                            className="absolute top-20 left-1/2 -translate-x-1/2 z-50"
+                            initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 10, scale: 0.8 }}
+                            transition={{ duration: 0.3, type: 'spring', bounce: 0.4 }}
+                        >
+                            <motion.div
+                                className="relative"
+                                animate={{
+                                    rotate: [-2, 2, -2],
+                                }}
+                                transition={{ duration: 1.5, repeat: Infinity }}
+                            >
+                                <motion.div
+                                    className="absolute -inset-2 bg-gradient-to-r from-blood-500/20 via-amber-500/20 to-blood-500/20 rounded-2xl blur-lg"
+                                    animate={{
+                                        opacity: [0.4, 0.7, 0.4],
+                                    }}
+                                    transition={{ duration: 2, repeat: Infinity }}
+                                />
+
+                                <div className="relative bg-gradient-to-br from-zinc-900 via-black to-zinc-900 backdrop-blur-xl px-6 py-4 rounded-2xl border-2 border-blood-500/50 shadow-2xl">
+                                    <motion.div
+                                        className="flex items-center gap-3"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ delay: 0.1 }}
+                                    >
+                                        <motion.span
+                                            className="text-3xl"
+                                            animate={{
+                                                rotate: [0, 14, -8, 14, 0],
+                                            }}
+                                            transition={{ duration: 1, repeat: Infinity, repeatDelay: 1 }}
+                                        >
+                                            👋
+                                        </motion.span>
+                                        <div>
+                                            <p className="text-white font-display text-xl tracking-wide mb-1">
+                                                That's Me
+                                            </p>
+                                            <p className="text-amber-400/80 text-xs tracking-[0.15em] uppercase">
+                                                Lost in cinema
+                                            </p>
+                                        </div>
+                                    </motion.div>
+
+                                    {/* Decorative corner dots */}
+                                    {[...Array(4)].map((_, i) => (
+                                        <motion.div
+                                            key={i}
+                                            className="absolute w-1.5 h-1.5 bg-blood-400 rounded-full"
+                                            style={{
+                                                top: i < 2 ? '8px' : 'auto',
+                                                bottom: i >= 2 ? '8px' : 'auto',
+                                                left: i % 2 === 0 ? '8px' : 'auto',
+                                                right: i % 2 === 1 ? '8px' : 'auto',
+                                            }}
+                                            animate={{
+                                                opacity: [0.3, 1, 0.3],
+                                                scale: [0.8, 1.2, 0.8],
+                                            }}
+                                            transition={{
+                                                duration: 1.5,
+                                                repeat: Infinity,
+                                                delay: i * 0.2,
+                                            }}
+                                        />
+                                    ))}
+                                </div>
+
+                                {/* Arrow pointer */}
+                                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-black" />
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </motion.div>
 
             <div
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
@@ -350,7 +584,10 @@ export default function MovieWall() {
 
                                     <div className="flex gap-3 flex-wrap">
                                         <span className="px-4 py-2 bg-blood-500/20 border border-blood-500/30 rounded-full text-blood-400 text-sm">
-                                            Click outside to close
+                                            ESC to close
+                                        </span>
+                                        <span className="px-4 py-2 bg-amber-500/20 border border-amber-500/30 rounded-full text-amber-400 text-sm">
+                                            ← → to navigate
                                         </span>
                                     </div>
                                 </motion.div>
