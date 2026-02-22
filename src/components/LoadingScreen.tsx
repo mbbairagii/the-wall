@@ -268,7 +268,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                 transition={{ delay: 1 }}
             >
                 <p className="text-center text-white/60 text-sm font-body tracking-[0.35em] uppercase">
-                    Designed and Developed by Kira
+                    Designed and Developed by Mohini
                 </p>
             </motion.footer>
 
