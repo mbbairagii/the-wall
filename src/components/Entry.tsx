@@ -518,7 +518,7 @@ export default function Entry({ onEnter }: EntryProps) {
                 transition={{ delay: 2.5 }}
             >
                 <p className="text-center text-white/85 text-sm font-body tracking-[0.35em] uppercase">
-                    Designed and Developed by Kira
+                    Designed and Developed by Mohini
                 </p>
             </motion.footer>
         </motion.div>
