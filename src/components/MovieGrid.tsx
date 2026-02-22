@@ -599,7 +599,7 @@ export default function MovieWall() {
 
             <footer className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-t from-black/90 via-black/70 to-transparent py-4 pointer-events-none">
                 <p className="text-center text-white/60 text-sm tracking-[0.35em] uppercase">
-                    Designed and Developed by Kira
+                    Designed and Developed by Mohini
                 </p>
             </footer>
         </div>
